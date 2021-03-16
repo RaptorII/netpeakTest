@@ -16,15 +16,11 @@
 
 <?php
 
-include_once ('config.php');
-include_once ('db.php');
+include_once ('dbPrj.php');
 
-$db = new DB;
+$res = (new dbPrj())->getProductById();
+$resAvg = (new dbPrj())->getAVGEstimate();
 
-$sql = "SELECT * FROM product WHERE id =". $_GET['product_id'];
-$res = $db::getRow($sql);
-
-//print_r($res);
 ?>
 
 <div class="container">
@@ -40,19 +36,60 @@ $res = $db::getRow($sql);
                     <?=$res['product_name']?>
                 </div>
                 <div class="box__estimate">
-                    Oценка: <span> 8.4 </span>
+                    Oценка: <span> <?=round($resAvg, 2)?> </span>
                 </div>
             </div>
         </div>
     </div>
     <br>
     <div class="row">
-        <a href="addReview.php" type="button" class="btn btn-primary" role="button">Add review</a>
+        <a href="addReview.php?product_id=<?=$_GET['product_id']?>" type="button" class="btn btn-primary" role="button">Add review</a>
         <a href="index.php" type="button" class="btn btn-primary" role="button">To main</a>
     </div>
 </div>
 
 
+<?php
+$res = (new dbPrj())->getReviewById();
 
+if (count($res)) :
+?>
+<br>
+<br>
+<div class="container">
+    <div class="row">
+
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>id</th>
+                    <th>name</th>
+                    <th>estimate</th>
+                    <th>comment</th>
+                    <th>date</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php
+            foreach ($res as $item):
+            ?>
+                <tr>
+                    <td><?=$item['id']?></td>
+                    <td><?=$item['rev_usr_name']?></td>
+                    <td><?=$item['rev_estimate']?></td>
+                    <td><?=$item['rev_comment']?></td>
+                    <td><?=$item['rev_date']?></td>
+                </tr>
+            <?php
+            endforeach;
+            ?>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<?php
+endif;
+?>
 </body>
 </html>

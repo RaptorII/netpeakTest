@@ -4,11 +4,6 @@
  */
 class DB
 {
-    /**
-     * Настройки подключения
-     * Лучше выносить в конфиг
-     * self::DB_HOST -> Config::DB_HOST
-     */
     const DB_HOST = Config::DB_HOST;
     const DB_USER = Config::DB_USER;
     const DB_PASSWORD = Config::DB_PASSWORD;

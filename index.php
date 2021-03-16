@@ -14,47 +14,14 @@
 </head>
 <body>
 
-
 <?php
 
-    include_once ('config.php');
-    include_once ('db.php');
+    include_once ('dbPrj.php');
 
-    $db = new DB;
-
-    $sql = "SELECT * FROM product";
-    switch ($_GET['sort']) {
-        case 'sort_id':
-            $sql = $sql . " ORDER BY id";
-            break;
-        case 'product_name':
-            $sql = $sql . " ORDER BY product_name";
-            break;
-        case 'product_img':
-            $sql = $sql . " ORDER BY product_img";
-            break;
-        case 'product_data':
-            $sql = $sql . " ORDER BY product_data";
-            break;
-        case 'product_usr_add':
-            $sql = $sql . " ORDER BY product_usr_add";
-            break;
-        case 'product_review':
-            $sql = $sql . " ORDER BY product_review";
-            break;
-    }
-
-    $res = $db::getRows($sql);
-
-    $sql = "SELECT * FROM users";
-    $resUsr = $db::getRows($sql);
-
-    $dataUsrs = [];
-    foreach ($resUsr as $usr) {
-        $dataUsrs[$usr['id']] = $usr;
-    }
-
+    $res = (new dbPrj())->getAllProducts();
+    $dataUsrs = (new dbPrj())->getAllUsers();
 ?>
+
 <table class="table">
     <thead class="thead-dark">
         <tr>
@@ -68,7 +35,7 @@
     </thead>
     <tbody>
     <?php
-    foreach ($res as $item) {
+    foreach ($res as $item):
     ?>
         <tr>
             <th scope="row"><?= $item['id']?></th>
@@ -87,12 +54,12 @@
             <td><?=$item['product_review']?></td>
         </tr>
     <?php
-    }
+    endforeach;
     ?>
     </tbody>
 </table>
 
-<a href="add.php" type="button" class="btn btn-primary">Add item</a>
+<a href="addProduct.php" type="button" class="btn btn-primary">Add item</a>
 
 </body>
 </html>
