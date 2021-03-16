@@ -1,0 +1,24 @@
+body{
+    max-width: 1440px;
+    margin: 0 auto;
+}
+form {
+    max-width: 768px;
+    margin: 0 auto;
+}
+.tab-img {
+    max-width: 35px;
+    /*max-height: 30px;*/
+    /*border-radius: 50%;*/
+}
+
+.prd_img {
+    max-width: 100%;
+}
+.box__name {
+    font-size: 30px;
+}
+
+.btn + .btn {
+    margin-left: 20px;
+}
